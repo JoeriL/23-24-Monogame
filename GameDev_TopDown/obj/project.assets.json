@@ -7530,11 +7530,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\joeri\\Documents\\23-24-Monogame\\Game\\Game.csproj",
-      "projectName": "Game",
-      "projectPath": "C:\\Users\\joeri\\Documents\\23-24-Monogame\\Game\\Game.csproj",
+      "projectUniqueName": "C:\\Users\\joeri\\Documents\\23-24-Monogame\\GameDev_TopDown\\GameDev_TopDown.csproj",
+      "projectName": "GameDev_TopDown",
+      "projectPath": "C:\\Users\\joeri\\Documents\\23-24-Monogame\\GameDev_TopDown\\GameDev_TopDown.csproj",
       "packagesPath": "C:\\Users\\joeri\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\joeri\\Documents\\23-24-Monogame\\Game\\obj\\",
+      "outputPath": "C:\\Users\\joeri\\Documents\\23-24-Monogame\\GameDev_TopDown\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
