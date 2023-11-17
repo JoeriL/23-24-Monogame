@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using GameDev_TopDown;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
@@ -8,6 +9,8 @@ namespace GameDev_TopDown
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
+        private Texture2D _charactertexture;
+        private Character character;
 
         public Game1()
         {
@@ -21,12 +24,14 @@ namespace GameDev_TopDown
             // TODO: Add your initialization logic here
 
             base.Initialize();
+            character = new Character(_charactertexture, new KeyboardReader());
         }
 
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-
+            // TODO: use this.Content to load your game content here
+            _charactertexture = Content.Load<Texture2D>("bandiet");
             // TODO: use this.Content to load your game content here
         }
 
@@ -36,7 +41,7 @@ namespace GameDev_TopDown
                 Exit();
 
             // TODO: Add your update logic here
-
+            character.Update(gameTime);
             base.Update(gameTime);
         }
 
@@ -45,6 +50,9 @@ namespace GameDev_TopDown
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
+            _spriteBatch.Begin();
+            character.Draw(_spriteBatch);
+            _spriteBatch.End();
 
             base.Draw(gameTime);
         }
