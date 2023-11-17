@@ -18,9 +18,8 @@ namespace GameDev_TopDown.AnimationsCode
         public Dictionary<Direction, AttackAnimation> attackanimationList = new Dictionary<Direction, AttackAnimation>();
         public Dictionary<Direction, DamageAnimation> damageanimationList = new Dictionary<Direction, DamageAnimation>();
         public Dictionary<Direction, WindAnimation> windanimationList = new Dictionary<Direction, WindAnimation>();
-        //public Dictionary<Direction, DeathAnimation> deathanimationList = new Dictionary<Direction, DeathAnimation>();
-
-
+        public Dictionary<Direction, GunIdleAnimation> gunidleanimationList = new Dictionary<Direction, GunIdleAnimation>();
+        public Dictionary<Direction, ShootAnimation> shootanimationList = new Dictionary<Direction, ShootAnimation>();
 
         public animationList()
         {
@@ -49,33 +48,15 @@ namespace GameDev_TopDown.AnimationsCode
             windanimationList.Add(Direction.Left, new WindAnimation(Direction.Left));
             windanimationList.Add(Direction.Right, new WindAnimation(Direction.Right));
 
-            /*
+            gunidleanimationList.Add(Direction.Up, new GunIdleAnimation(Direction.Up));
+            gunidleanimationList.Add(Direction.Down, new GunIdleAnimation(Direction.Down));
+            gunidleanimationList.Add(Direction.Left, new GunIdleAnimation(Direction.Left));
+            gunidleanimationList.Add(Direction.Right, new GunIdleAnimation(Direction.Right));
 
-            attackanimation = new Animation();
-            attackanimation.AddFrame(new AnimationFrame(new Rectangle(0, 192, 160, 96)));
-            attackanimation.AddFrame(new AnimationFrame(new Rectangle(160, 192, 160, 96)));
-            attackanimation.AddFrame(new AnimationFrame(new Rectangle(320, 192, 160, 96)));
-            attackanimation.AddFrame(new AnimationFrame(new Rectangle(480, 192, 160, 96)));
-            attackanimation.AddFrame(new AnimationFrame(new Rectangle(640, 192, 160, 96)));
-            attackanimation.AddFrame(new AnimationFrame(new Rectangle(800, 192, 160, 96)));
-            attackanimation.AddFrame(new AnimationFrame(new Rectangle(960, 192, 160, 96)));
-
-            damageanimation = new Animation();
-            damageanimation.AddFrame(new AnimationFrame(new Rectangle(0, 288, 160, 96)));
-            damageanimation.AddFrame(new AnimationFrame(new Rectangle(160, 288, 160, 96)));
-            damageanimation.AddFrame(new AnimationFrame(new Rectangle(320, 288, 160, 96)));
-            damageanimation.AddFrame(new AnimationFrame(new Rectangle(480, 288, 160, 96)));
-
-            deathanimation = new Animation();
-            deathanimation.AddFrame(new AnimationFrame(new Rectangle(0, 384, 160, 96)));
-            deathanimation.AddFrame(new AnimationFrame(new Rectangle(160, 384, 160, 96)));
-            deathanimation.AddFrame(new AnimationFrame(new Rectangle(320, 384, 160, 96)));
-            deathanimation.AddFrame(new AnimationFrame(new Rectangle(480, 384, 160, 96)));
-            deathanimation.AddFrame(new AnimationFrame(new Rectangle(640, 384, 160, 96)));
-            deathanimation.AddFrame(new AnimationFrame(new Rectangle(800, 384, 160, 96)));
-            */
+            shootanimationList.Add(Direction.Up, new ShootAnimation(Direction.Up));
+            shootanimationList.Add(Direction.Down, new ShootAnimation(Direction.Down));
+            shootanimationList.Add(Direction.Left, new ShootAnimation(Direction.Left));
+            shootanimationList.Add(Direction.Right, new ShootAnimation(Direction.Right));
         }
-
-
     }
 }
