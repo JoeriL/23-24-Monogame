@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
-namespace GameDev_TopDown
+namespace GameDev_TopDown.AnimationsCode
 {
     class AnimationFrame
     {

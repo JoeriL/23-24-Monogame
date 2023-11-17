@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
-namespace GameDev_TopDown
+namespace GameDev_TopDown.AnimationsCode
 {
     class animationList
     {
@@ -22,7 +22,7 @@ namespace GameDev_TopDown
 
 
 
-        public animationList() 
+        public animationList()
         {
             idleanimationList.Add(Direction.Up, new IdleAnimation(Direction.Up));
             idleanimationList.Add(Direction.Down, new IdleAnimation(Direction.Down));
