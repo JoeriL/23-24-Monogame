@@ -2,12 +2,13 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System.Drawing;
 
 namespace GameDev_TopDown
 {
     public class Game1 : Game
     {
-        private GraphicsDeviceManager _graphics;
+        public GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         private Texture2D _charactertexture;
         private Character character;
@@ -22,6 +23,10 @@ namespace GameDev_TopDown
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
+            _graphics.PreferredBackBufferWidth = GraphicsDevice.DisplayMode.Width;
+            _graphics.PreferredBackBufferHeight = GraphicsDevice.DisplayMode.Height;
+            _graphics.IsFullScreen = true; // Set to true to make the game window fullscreen
+            _graphics.ApplyChanges();
 
             base.Initialize();
             character = new Character(_charactertexture, new KeyboardReader());
@@ -41,13 +46,13 @@ namespace GameDev_TopDown
                 Exit();
 
             // TODO: Add your update logic here
-            character.Update(gameTime);
+            character.Update(gameTime,_graphics);
             base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Microsoft.Xna.Framework.Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
             _spriteBatch.Begin();

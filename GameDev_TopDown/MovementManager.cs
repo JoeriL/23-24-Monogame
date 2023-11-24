@@ -11,27 +11,26 @@ namespace GameDev_TopDown
 {
     class MovementManager 
     {
-        public void Move(IMovable movable)
+        public void Move(IMovable movable, GameTime gameTime, GraphicsDeviceManager graphics)
         {
             var direction = movable.InputReader.ReadInput();
-            if (movable.InputReader.IsDestinationInput)
-            {
-                direction -= movable.Position;
-                direction.Normalize();
-            }
-
+            
             var afstand = direction * movable.Speed;
-            var toekomstigePositie = movable.Position + direction;
-            if (
-              (toekomstigePositie.X < (800 - 160)
-               && toekomstigePositie.X > 0) &&
-               (toekomstigePositie.Y < 480 - 96
-               && toekomstigePositie.Y > 0)
-            )
+            var toekomstigePositie = movable.Position + afstand;
+
+            if (IsWithinScreenBoundaries(toekomstigePositie, graphics))
             {
                 movable.Position = toekomstigePositie;
             }
 
+        }
+        private bool IsWithinScreenBoundaries(Vector2 position, GraphicsDeviceManager graphics)
+        {
+            int screenWidth = graphics.PreferredBackBufferWidth - 48;
+            int screenHeight = graphics.PreferredBackBufferHeight - 96;
+
+            return (position.X >= 0 && position.X <= screenWidth &&
+                    position.Y >= 0 && position.Y <= screenHeight);
         }
 
     }

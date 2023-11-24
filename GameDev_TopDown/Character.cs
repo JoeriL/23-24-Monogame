@@ -19,6 +19,7 @@ namespace GameDev_TopDown
         private int schuifOp_X = 0;
         animationList _animationList;
         Vector2 versnelling = new Vector2(0.05f, 0.05f);
+
         private Vector2 Limit(Vector2 v, float max)
         {
             if (v.Length() > max)
@@ -31,7 +32,7 @@ namespace GameDev_TopDown
         }
 
         public Vector2 positie = new Vector2(0, 0);
-        public Vector2 snelheid = new Vector2(1, 1);
+        public Vector2 snelheid = new Vector2(50, 50);
         private IInputReader inputReader;
 
         private MovementManager movementManager = new MovementManager();
@@ -59,40 +60,118 @@ namespace GameDev_TopDown
             _animationList = new animationList();
 
             positie = new Vector2(1, 1);
-            snelheid = new Vector2(2, 2);
-            versnelling = new Vector2(0.1f, 0.1f);
+            snelheid = new Vector2(50, 50);
+            versnelling = new Vector2(0.05f, 0.05f);
         }
 
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(_texture, positie, _animationList.attackanimationList[Direction.Right].CurrentFrame.SourceRectangle, Color.White/*, Effect*/);
-            spriteBatch.Draw(_texture, positie, _animationList.windanimationList[Direction.Right].CurrentFrame.SourceRectangle, Color.White/*, Effect*/);
+            Animation currentAnimation;
+            Vector2 input = inputReader.ReadInput();
+            // Example: If the character is moving horizontally, use the walk animation; otherwise, use the idle animation
+            if (input != Vector2.Zero)
+            {
+                currentAnimation = _animationList.walkanimationList[GetMovementDirection()];
+            }
+            else
+            {
+                currentAnimation = _animationList.idleanimationList[GetIdleDirection()];
+            }
+
+            // Draw the current animation
+            spriteBatch.Draw(_texture, positie, currentAnimation.CurrentFrame.SourceRectangle, Color.White);
+
 
         }
-        public void Update(GameTime gameTime)
+        private Direction GetMovementDirection()
+        {
+            // Determine the primary direction based on movement vector
+            if (Math.Abs(inputReader.ReadInput().X) > Math.Abs(inputReader.ReadInput().Y))
+            {
+                return (inputReader.ReadInput().X > 0) ? Direction.Right : Direction.Left;
+            }
+            else
+            {
+                return (inputReader.ReadInput().Y > 0) ? Direction.Down : Direction.Up;
+            }
+        }
+
+        private Direction GetIdleDirection()
+        {
+            // Determine the primary direction based on idle vector
+            // You might need additional logic here based on your specific requirements
+            // For now, returning the right direction as an example
+            return Direction.Right;
+        }
+        public void Update(GameTime gameTime, GraphicsDeviceManager graphics)
         {
 
-            Move();
-            foreach (KeyValuePair<Direction, AttackAnimation> kvp in _animationList.attackanimationList)
+            Move(gameTime,graphics);
+            Vector2 input = inputReader.ReadInput();
+
+            if (input != Vector2.Zero)
+            {
+                // If any arrow key is pressed, update movement animation
+                UpdateMovementAnimation(input, gameTime);
+            }
+            else
+            {
+                // If no arrow keys are pressed, update idle animation
+                UpdateIdleAnimation(gameTime);
+            }
+
+        }
+        private void UpdateIdleAnimation(GameTime gameTime)
+        {
+            // Update idle animation based on the direction the character is facing
+            foreach (KeyValuePair<Direction, IdleAnimation> kvp in _animationList.idleanimationList)
             {
                 kvp.Value.Update(gameTime);
             }
-            foreach (KeyValuePair<Direction, WindAnimation> kvp in _animationList.windanimationList)
+        }
+        private void UpdateMovementAnimation(Vector2 input, GameTime gameTime)
+        {
+            // Determine the direction based on input vector
+            Direction movementDirection = DetermineMovementDirection(input);
+
+            // Update movement animation based on the direction
+            foreach (KeyValuePair<Direction, WalkAnimation> kvp in _animationList.walkanimationList)
             {
-                kvp.Value.Update(gameTime);
+                if (kvp.Key == movementDirection)
+                {
+                    kvp.Value.Update(gameTime);
+                }
+            }
+
+            // Move the character based on input
+            positie += input * snelheid * (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+            // Limit the speed to ensure consistent movement speed in all directions
+            snelheid = Limit(snelheid, 5.0f);
+        }
+        private Direction DetermineMovementDirection(Vector2 input)
+        {
+            // Determine the primary direction based on input vector
+            if (Math.Abs(input.X) > Math.Abs(input.Y))
+            {
+                return (input.X > 0) ? Direction.Right : Direction.Left;
+            }
+            else
+            {
+                return (input.Y > 0) ? Direction.Down : Direction.Up;
             }
         }
-        private void Move()
+        private void Move(GameTime gameTime, GraphicsDeviceManager graphics)
         {
-            movementManager.Move(this);
+            movementManager.Move(this,gameTime,graphics);
             
         }
 
     }
         internal interface IGameObject
         {
-            void Update(GameTime gameTime);
+            void Update(GameTime gameTime, GraphicsDeviceManager graphics);
             void Draw(SpriteBatch spriteBatch);
         }
     public enum Direction
